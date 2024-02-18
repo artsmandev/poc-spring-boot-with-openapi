@@ -1,0 +1,26 @@
+package dev.artsman.poc.repositories;
+
+import dev.artsman.poc.entities.PersonEntity;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class PersonRepository {
+	private static final HashMap<UUID, PersonEntity> database;
+	static {
+		database = new HashMap<>();
+	}
+
+	public PersonEntity save(PersonEntity personEntity) {
+		UUID uuid = UUID.randomUUID();
+		personEntity.setId(uuid);
+		database.put(uuid, personEntity);
+		return personEntity;
+	}
+
+	public List<PersonEntity> findAll() {
+		return database.values().stream().toList();
+	}
+}
