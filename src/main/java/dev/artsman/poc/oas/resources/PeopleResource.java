@@ -1,6 +1,7 @@
 package dev.artsman.poc.oas.resources;
 
 import dev.artsman.poc.dtos.PersonDto;
+import dev.artsman.poc.oas.schemas.PersonSchema;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,7 +24,7 @@ public interface PeopleResource {
 					mediaType = MediaType.APPLICATION_JSON_VALUE,
 					array = @ArraySchema(
 						schema = @Schema(
-							implementation = PersonDto.class
+							implementation = PersonSchema.class
 						)
 					)
 				)
