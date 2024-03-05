@@ -2,13 +2,19 @@ package dev.artsman.poc.controllers;
 
 import dev.artsman.poc.dtos.PersonCreateDto;
 import dev.artsman.poc.dtos.PersonDto;
+import dev.artsman.poc.dtos.PersonUpdateDto;
 import dev.artsman.poc.mapper.PersonMapper;
 import dev.artsman.poc.oas.resources.PeopleResource;
 import dev.artsman.poc.services.PersonService;
 import jakarta.validation.Valid;
+import java.beans.FeatureDescriptor;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -51,7 +57,27 @@ public class PeopleController implements PeopleResource {
 
 	@PatchMapping("/{id}")
 	@Override
-	public ResponseEntity<PersonDto> update(@PathVariable UUID id, @Valid @RequestBody PersonCreateDto personDto) {
-		return null;
+	public ResponseEntity<PersonDto> update(@PathVariable UUID id, @RequestBody PersonUpdateDto requestDto) {
+		if (requestDto.hasNoPropertiesToUpdate()) {
+			return ResponseEntity.badRequest().build();
+		}
+
+		var entityToUpdate = service.findById(id);
+		if (Objects.isNull(entityToUpdate)) {
+			ResponseEntity.notFound().build();
+		}
+
+		BeanUtils.copyProperties(requestDto, entityToUpdate, ignoreNullProperties(requestDto));
+
+		var entityUpdated = service.update(entityToUpdate);
+		return ResponseEntity.ok(mapper.toDto(entityUpdated));
+	}
+
+	public static String[] ignoreNullProperties(Object source) {
+		var wrappedSource = new BeanWrapperImpl(source);
+		return Stream.of(wrappedSource.getPropertyDescriptors())
+			.map(FeatureDescriptor::getName)
+			.filter(propertyName -> wrappedSource.getPropertyValue(propertyName) == null)
+			.toArray(String[]::new);
 	}
 }
