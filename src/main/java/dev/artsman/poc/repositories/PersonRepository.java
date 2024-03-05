@@ -14,13 +14,22 @@ public class PersonRepository {
 	}
 
 	public PersonEntity save(PersonEntity personEntity) {
-		UUID uuid = UUID.randomUUID();
+		var uuid = UUID.randomUUID();
 		personEntity.setId(uuid);
 		database.put(uuid, personEntity);
 		return personEntity;
 	}
 
+	public PersonEntity update(PersonEntity personEntity) {
+		database.put(personEntity.getId(), personEntity);
+		return personEntity;
+	}
+
 	public List<PersonEntity> findAll() {
 		return database.values().stream().toList();
+	}
+
+	public PersonEntity findById(UUID id) {
+		return database.get(id);
 	}
 }

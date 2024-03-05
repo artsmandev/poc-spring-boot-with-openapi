@@ -2,6 +2,7 @@ package dev.artsman.poc.oas.resources;
 
 import dev.artsman.poc.dtos.PersonCreateDto;
 import dev.artsman.poc.dtos.PersonDto;
+import dev.artsman.poc.dtos.PersonUpdateDto;
 import dev.artsman.poc.oas.schemas.PersonCreateSchema;
 import dev.artsman.poc.oas.schemas.PersonSchema;
 import dev.artsman.poc.oas.schemas.PersonUpdateSchema;
@@ -131,5 +132,5 @@ public interface PeopleResource {
 			)
 		}
 	)
-	ResponseEntity<PersonDto> update(UUID id, PersonCreateDto personDto);
+	ResponseEntity<PersonDto> update(UUID id, PersonUpdateDto personDto);
 }
