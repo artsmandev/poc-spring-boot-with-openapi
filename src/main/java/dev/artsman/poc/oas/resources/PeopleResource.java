@@ -1,5 +1,6 @@
 package dev.artsman.poc.oas.resources;
 
+import dev.artsman.poc.dtos.PersonCreateDto;
 import dev.artsman.poc.dtos.PersonDto;
 import dev.artsman.poc.oas.schemas.PersonCreateSchema;
 import dev.artsman.poc.oas.schemas.PersonSchema;
@@ -61,7 +62,7 @@ public interface PeopleResource {
 			)
 		}
 	)
-	ResponseEntity<PersonDto> save(PersonDto personDto);
+	ResponseEntity<PersonDto> save(PersonCreateDto personDto);
 
 	@Operation(
 		summary = "Partially update.",
@@ -130,5 +131,5 @@ public interface PeopleResource {
 			)
 		}
 	)
-	ResponseEntity<PersonDto> update(UUID id, PersonDto personDto);
+	ResponseEntity<PersonDto> update(UUID id, PersonCreateDto personDto);
 }
