@@ -1,9 +1,11 @@
 package dev.artsman.poc.controllers;
 
+import dev.artsman.poc.dtos.PersonCreateDto;
 import dev.artsman.poc.dtos.PersonDto;
+import dev.artsman.poc.mapper.PersonMapper;
 import dev.artsman.poc.oas.resources.PeopleResource;
 import dev.artsman.poc.services.PersonService;
-import java.net.URI;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -22,29 +24,34 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequiredArgsConstructor
 public class PeopleController implements PeopleResource {
 	private final PersonService service;
+	private final PersonMapper mapper;
 
 	@GetMapping
 	public ResponseEntity<List<PersonDto>> findAll() {
-		List<PersonDto> personDtos = service.findAll();
-		if (personDtos.isEmpty()) {
+		var responseDtos = service.findAll();
+		if (responseDtos.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
-		return ResponseEntity.ok(personDtos);
+		return ResponseEntity.ok(responseDtos);
 	}
 
 	@PostMapping
-	public ResponseEntity<PersonDto> save(@RequestBody PersonDto personDto) {
-		personDto = service.save(personDto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+	public ResponseEntity<PersonDto> save(@Valid @RequestBody PersonCreateDto requestDto) {
+		var entityToCreate = mapper.toEntity(requestDto);
+		var entityCreated = service.save(entityToCreate);
+
+		var uri = ServletUriComponentsBuilder.fromCurrentRequest()
 			.path("/{id}")
-			.buildAndExpand(personDto.getId())
+			.buildAndExpand(entityCreated.getId())
 		 	.toUri();
-		return ResponseEntity.created(uri).body(personDto);
+
+		var responseDto = mapper.toDto(entityCreated);
+		return ResponseEntity.created(uri).body(responseDto);
 	}
 
 	@PatchMapping("/{id}")
 	@Override
-	public ResponseEntity<PersonDto> update(@PathVariable UUID id, @RequestBody PersonDto personDto) {
+	public ResponseEntity<PersonDto> update(@PathVariable UUID id, @Valid @RequestBody PersonCreateDto personDto) {
 		return null;
 	}
 }
