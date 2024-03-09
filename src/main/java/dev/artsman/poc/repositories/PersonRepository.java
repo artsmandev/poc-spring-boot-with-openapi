@@ -32,4 +32,8 @@ public class PersonRepository {
 	public PersonEntity findById(UUID id) {
 		return database.get(id);
 	}
+
+	public void delete(UUID id) {
+		database.remove(id);
+	}
 }

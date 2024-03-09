@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,6 +72,17 @@ public class PeopleController implements PeopleResource {
 
 		var entityUpdated = service.update(entityToUpdate);
 		return ResponseEntity.ok(mapper.toDto(entityUpdated));
+	}
+
+	@DeleteMapping
+	@Override
+	public ResponseEntity<Void> delete(UUID id) {
+		var personEntity = service.findById(id);
+		if (Objects.isNull(personEntity)) {
+			return ResponseEntity.notFound().build();
+		}
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 	public static String[] ignoreNullProperties(Object source) {

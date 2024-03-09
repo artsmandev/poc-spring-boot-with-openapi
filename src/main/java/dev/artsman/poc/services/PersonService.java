@@ -5,7 +5,6 @@ import dev.artsman.poc.entities.PersonEntity;
 import dev.artsman.poc.mapper.PersonMapper;
 import dev.artsman.poc.repositories.PersonRepository;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,5 +35,9 @@ public class PersonService {
 
 	public PersonEntity findById(UUID id) {
 		return repository.findById(id);
+	}
+
+	public void delete(UUID id) {
+		repository.delete(id);
 	}
 }

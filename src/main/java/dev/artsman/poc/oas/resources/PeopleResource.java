@@ -36,6 +36,11 @@ public interface PeopleResource {
 						)
 					)
 				)
+			),
+			@ApiResponse(
+				responseCode = "204",
+				description = "There is not People.",
+				content = {@Content}
 			)
 		}
 	)
@@ -133,4 +138,28 @@ public interface PeopleResource {
 		}
 	)
 	ResponseEntity<PersonDto> update(UUID id, PersonUpdateDto personDto);
+
+	@Operation(
+		summary = "Delete.",
+		description = "Remove a person.",
+		parameters = {
+			@Parameter(
+				name = "id",
+				description = "Person's id.",
+				example = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+			)
+		},
+		responses = {
+			@ApiResponse(
+				responseCode = "204",
+				description = "Person removed successfully."
+			),
+			@ApiResponse(
+				responseCode = "404",
+				description = "There is no Person by the given id.",
+				content = {@Content}
+			)
+		}
+	)
+	ResponseEntity<Void> delete(UUID id);
 }
