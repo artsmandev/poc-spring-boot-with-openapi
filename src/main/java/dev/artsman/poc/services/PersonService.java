@@ -2,7 +2,7 @@ package dev.artsman.poc.services;
 
 import dev.artsman.poc.dtos.PersonDto;
 import dev.artsman.poc.entities.PersonEntity;
-import dev.artsman.poc.mapper.PersonMapper;
+import dev.artsman.poc.mappers.PersonMapper;
 import dev.artsman.poc.repositories.PersonRepository;
 import java.util.List;
 import java.util.UUID;

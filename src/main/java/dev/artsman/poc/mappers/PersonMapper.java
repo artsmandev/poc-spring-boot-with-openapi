@@ -1,4 +1,4 @@
-package dev.artsman.poc.mapper;
+package dev.artsman.poc.mappers;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 

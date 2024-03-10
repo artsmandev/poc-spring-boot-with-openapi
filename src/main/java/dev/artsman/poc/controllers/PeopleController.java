@@ -3,7 +3,7 @@ package dev.artsman.poc.controllers;
 import dev.artsman.poc.dtos.PersonCreateDto;
 import dev.artsman.poc.dtos.PersonDto;
 import dev.artsman.poc.dtos.PersonUpdateDto;
-import dev.artsman.poc.mapper.PersonMapper;
+import dev.artsman.poc.mappers.PersonMapper;
 import dev.artsman.poc.oas.resources.PeopleResource;
 import dev.artsman.poc.services.PersonService;
 import jakarta.validation.Valid;
