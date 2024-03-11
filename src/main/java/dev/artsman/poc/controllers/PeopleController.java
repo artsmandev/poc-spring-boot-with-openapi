@@ -7,6 +7,7 @@ import dev.artsman.poc.mappers.PersonMapper;
 import dev.artsman.poc.oas.resources.PeopleResource;
 import dev.artsman.poc.services.PersonService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.beans.FeatureDescriptor;
 import java.util.List;
 import java.util.Objects;

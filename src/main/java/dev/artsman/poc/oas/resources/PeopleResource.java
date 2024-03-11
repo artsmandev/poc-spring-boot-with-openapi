@@ -96,30 +96,30 @@ public interface PeopleResource {
 						name = "Individually",
 						description = "Payload to update only firstName.",
 						value = """
-							{
-								"firstName": "Frank"
-							}
+						{
+						\t"firstName": "Frank"
+						}
 						"""
 					),
 					@ExampleObject(
 						name = "Combined two",
 						description = "Payload to update firstName and lastName.",
 						value = """
-							{
-								"firstName": "Frank",
-								"lastName": "Castle"
-							}
+						{
+						\t"firstName": "Frank",
+						\t"lastName": "Castle"
+						}
 						"""
 					),
 					@ExampleObject(
 						name = "All properties",
 						description = "Payload to update firstName, lastName and birthday.",
 						value = """
-							{
-								"firstName": "Frank",
-								"lastName": "Castle",
-								"birthday": "1979-11-15"
-							}
+						{
+						\t"firstName": "Frank",
+						\t"lastName": "Castle",
+						\t"birthday": "1979-11-15"
+						}
 						"""
 					)
 				}

@@ -5,14 +5,13 @@ import java.time.LocalDate;
 
 @Schema(
 	name = "PersonCreate",
-	example =
-		"""
-		{
-			"firstName": "Frank",
-			"lastName": "Castle",
-			"birthday": "1979-11-15"
-		}
-		"""
+	example = """
+	{
+	\t"firstName": "Frank",
+	\t"lastName": "Castle",
+	\t"birthday": "1979-11-15"
+	}
+	"""
 )
 public interface PersonCreateSchema {
 	@Schema(requiredMode = Schema.RequiredMode.REQUIRED)

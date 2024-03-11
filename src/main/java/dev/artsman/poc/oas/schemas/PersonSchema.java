@@ -8,15 +8,14 @@ import java.util.UUID;
 
 @Schema(
 	name = "Person",
-	example =
-		"""
-		{
-			"id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-			"firstName": "Frank",
-			"lastName": "Castle",
-			"birthday": "1979-11-15"
-		}
-		"""
+	example = """
+	{
+	\t"id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+	\t"firstName": "Frank",
+	\t"lastName": "Castle",
+	\t"birthday": "1979-11-15"
+	}
+	"""
 )
 public interface PersonSchema {
 	@Schema(requiredMode = REQUIRED)
