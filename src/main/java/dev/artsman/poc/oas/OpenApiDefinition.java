@@ -26,9 +26,11 @@ import org.springframework.stereotype.Component;
 		),
 		version = "0.1.1-SNAPSHOT"
 	),
-	servers = @Server(
-		url = "http://localhost:8080",
-		description = "Development"
-	)
+	servers = {
+		@Server(
+			url = "http://localhost:8080",
+			description = "Development"
+		)
+	}
 )
 public final class OpenApiDefinition {}
