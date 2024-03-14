@@ -20,7 +20,7 @@ import java.util.UUID;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@Tag(name = "People", description = "People's resources")
+@Tag(name = "People")
 public interface PeopleResource {
 	@Operation(
 		summary = "Find all.",
