@@ -1,0 +1,183 @@
+openapi: 3.0.1
+info:
+  title: POC Spring Boot with OpenAPI
+  description: POC to validate how to implement Spring Boot 3 and OpenAPI 3
+  termsOfService: https://openlearninglibrary.mit.edu/tos
+  contact:
+    name: Bruno Andrade
+    url: https://artsman.dev
+    email: bruno@artsman.dev
+  license:
+    name: MIT License
+    url: https://www.mit.edu/~amini/LICENSE.md
+  version: 0.1.1-SNAPSHOT
+servers:
+- url: http://localhost:8080
+  description: Development
+tags:
+- name: People
+  description: People's resources
+paths:
+  /api/people:
+    get:
+      tags:
+      - People
+      summary: Find all.
+      description: Find all people.
+      operationId: findAll
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Person'
+        "204":
+          description: There is not People.
+    post:
+      tags:
+      - People
+      summary: Create.
+      description: Create a person.
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonCreate'
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+    delete:
+      tags:
+      - People
+      summary: Delete.
+      description: Remove a person.
+      operationId: delete
+      parameters:
+      - name: id
+        in: query
+        description: Person's id.
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+      responses:
+        "204":
+          description: Person removed successfully.
+        "404":
+          description: There is no Person by the given id.
+  /api/people/{id}:
+    patch:
+      tags:
+      - People
+      summary: Partially update.
+      description: |
+        Partially update a Person:
+
+        • Individually: just *firstName*.
+
+        • Combined two: *firstName* and *lastName*.
+
+        • All properties: *firstName*, *lastName* and *birthday*.
+      operationId: update
+      parameters:
+      - name: id
+        in: path
+        description: Person's id.
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonUpdate'
+            examples:
+              Individually:
+                description: Payload to update only firstName.
+                value:
+                  firstName: Frank
+              Combined two:
+                description: Payload to update firstName and lastName.
+                value:
+                  firstName: Frank
+                  lastName: Castle
+              All properties:
+                description: "Payload to update firstName, lastName and birthday."
+                value:
+                  firstName: Frank
+                  lastName: Castle
+                  birthday: 1979-11-15
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+components:
+  schemas:
+    PersonCreate:
+      required:
+      - birthday
+      - firstName
+      - lastName
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        birthday:
+          type: string
+          format: date
+      example:
+        firstName: Frank
+        lastName: Castle
+        birthday: 1979-11-15
+    Person:
+      required:
+      - birthday
+      - firstName
+      - id
+      - lastName
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        birthday:
+          type: string
+          format: date
+      example:
+        id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        firstName: Frank
+        lastName: Castle
+        birthday: 1979-11-15
+    PersonUpdate:
+      minProperties: 1
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        birthday:
+          type: string
+          format: date
